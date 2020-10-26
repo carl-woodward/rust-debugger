@@ -1,3 +1,4 @@
+use debugger;
 use std::env;
 
 fn main() {
@@ -5,13 +6,21 @@ fn main() {
     println!("{:?}", args);
 }
 
+mod debugger {
+    #[allow(dead_code)]
+    pub struct Engine {
+        path: String,
+        pid: u32,
+    }
+
+    impl Engine {}
+}
+
 #[cfg(test)]
 mod tests {
-    use super::*; // This gives us access to the outer scope.
-
     #[test]
     fn create_process() -> Result<(), String> {
-        let debugger = Debugger {
+        let debugger = debugger::Engine {
             path: String::from(""),
             pid: 12,
         };
@@ -24,11 +33,3 @@ mod tests {
         Ok(())
     }
 }
-
-#[allow(dead_code)]
-pub struct Debugger {
-    path: String,
-    pid: u32,
-}
-
-impl Debugger {}
